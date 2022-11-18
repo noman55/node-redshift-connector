@@ -30,9 +30,9 @@ Warning!!!!!! This is new and still under development. The API is bound to chang
 ## Installation
 Install the package by running
 ```javascript
-npm install node-redshift
+npm install node-redshift-connector
 ```
-Link to npm repository https://www.npmjs.com/package/node-redshift
+Link to npm repository https://www.npmjs.com/package/node-redshift-connector
 
 ## Setup
 
