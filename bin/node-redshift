@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+var commander = require('commander');
+var migrate = require('../lib/migration.js');
+var model = require('../lib/model.js');
+
+commander
+  .version('0.0.1')
+  .option('migration:create [name]', 'Create a new Redshift migration')
+  .option('db:migrate [name or number_of_migrations]', 'Run all or a number of migrations against your Redshift database')
+  .option('db:migrate:undo [name or number_of_migrations]', 'Undo all or a number of migrations against your Redshift database')
+  .option('model:create [name]', 'Create a new Redshift model')
+  .parse(process.argv);
+
+if(commander['migration:create']){
+  var fileName = undefined;
+  if(commander["migration:create"] && commander["migration:create"] !== true) fileName = commander["migration:create"];
+  migrate.create(fileName);
+}
+
+else if(commander['db:migrate']){
+  var fileNameOrNumber = undefined;
+  if(commander["db:migrate"] && commander["db:migrate"] !== true) fileNameOrNumber = commander["db:migrate"];
+  migrate.up(fileNameOrNumber);
+}
+
+else if(commander['db:migrate:undo']){
+  var fileNameOrNumber = undefined;
+  if(commander["db:migrate:undo"] && commander["db:migrate:undo"] !== true) fileNameOrNumber = commander["db:migrate:undo"];
+  migrate.down(fileNameOrNumber);
+}
+
+else if(commander['model:create']){
+  var fileName = undefined;
+  if(commander['model:create'] && commander['model:create'] !== true) model.create(commander['model:create']);
+  else console.log("Error: Please enter a valid name for the model");
+}
+else console.log("Invalid command line arguments. Please run `node-redshift --help` for more help on commands");
